@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2014-2017, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. 
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!--
+   This is the OSGi Blueprint XML file defining the Camel context and routes.  Because the file is in the
+   OSGI-INF/blueprint directory inside our JAR, it will be automatically activated as soon as the bundle is installed.
+
+   The root element for any OSGi Blueprint file is 'blueprint' - you also see the namespace definitions for both the Blueprint
+   and the Camel namespaces.
+-->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+    xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0       https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd     http://camel.apache.org/schema/blueprint           http://camel.apache.org/schema/blueprint/camel-blueprint.xsd          http://camel.apache.org/schema/blueprint/cxf           http://camel.apache.org/schema/blueprint/cxf/camel-cxf.xsd     http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0      http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
+    <!-- Property file place holder -->
+    <cm:property-placeholder persistent-id="connections" update-strategy="reload">
+        <!-- <cm:default-properties>
+			<cm:property name="sql"
+				value="http://180.151.97.61:9080/unifyejb/CRMAPI" />
+			<cm:property name="BillingAPI"
+				value="http://180.151.97.61:9080/unifyejb/BillingAPI" />
+			<cm:property name="CRMResponseAPI"
+				value="http://203.122.59.12:8085/LeadCreation.svc" />
+		</cm:default-properties> -->
+    </cm:property-placeholder>
+    <cxf:cxfEndpoint address="/webServiceExpose/"
+        id="CreateCustomerEndpoint"
+        serviceClass="org.example.createcustomer_wsdl.CreateCustomerEndpoint" wsdlURL="WSDL/GetFullName.wsdl"/>
+    <bean class="com.capiot.getFullName.CreateCustomerProcessor" id="ProcessCreateCustomer"/>
+    <!-- Data Source Declaration -->
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="oracleDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="username" value="system"/>
+        <property name="password" value="system123"/>
+    </bean>
+    <bean class="org.apache.camel.component.sql.SqlComponent" id="sql">
+        <property name="dataSource" ref="oracleDataSource"/>
+    </bean>
+    <!--
+      The namespace for the camelContext element in Blueprint is 'https://camel.apache.org/schema/blueprint'. Additionally,
+      we can also define namespace prefixes we want to use them in the XPath expressions in our CBR.
+
+      While it is not required to assign id's to the <camelContext/> and <route/> elements, it is a good idea
+      to set those for runtime management purposes (logging, JMX MBeans, ...)
+    -->
+    <camelContext id="CreateCusotmerWebService" xmlns="http://camel.apache.org/schema/blueprint">
+        <route id="_route1">
+            <!-- <setHeader headerName="CamelSqlRetrieveGeneratedKeys">
+            	<simple>true</simple>
+            </setHeader> -->
+            <from id="_from1" uri="cxf:bean:CreateCustomerEndpoint"/>
+            <convertBodyTo id="_convertBodyTo1" type="org.example.createcustomer_wsdl.CreateCustomerRequest"/>
+            <log id="_log1" message="Request Received : ${body.getFirstName()}"/>
+            <setHeader headerName="CustID" id="_setHeader1">
+                <simple>${body.getCustID()}</simple>
+            </setHeader>
+            <setHeader headerName="FirstName" id="_setHeader2">
+                <simple>${body.getFirstName()}</simple>
+            </setHeader>
+            <setHeader headerName="LastName" id="_setHeader3">
+                <simple>${body.getLastName()}</simple>
+            </setHeader>
+            <setHeader headerName="MiddleName" id="_setHeader4">
+                <simple>${body.getMiddleName()}</simple>
+            </setHeader>
+            <setHeader headerName="Email" id="_setHeader5">
+                <simple>${body.getEmail()}</simple>
+            </setHeader>
+            <setHeader headerName="PhoneNo" id="_setHeader6">
+                <simple>${body.getPhoneNo()}</simple>
+            </setHeader>
+            <setHeader headerName="MobileNo" id="_setHeader7">
+                <simple>${body.getMobileNo()}</simple>
+            </setHeader>
+            <setHeader headerName="Add1" id="_setHeader8">
+                <simple>${body.getAdd1()}</simple>
+            </setHeader>
+            <setHeader headerName="Add2" id="_setHeader9">
+                <simple>${body.getAdd2()}</simple>
+            </setHeader>
+            <setHeader headerName="Add3" id="_setHeader10">
+                <simple>${body.getAdd3()}</simple>
+            </setHeader>
+            <!-- <to id="_to1" uri="sql:{{SQLInsertQueryTemp}}?dataSource=oracleDataSource"/> -->
+            <!-- <log message="headers generated : ${headers}"/> -->
+            <setHeader headerName="City" id="_setHeader11">
+                <simple>${body.getCity()}</simple>
+            </setHeader>
+            <setHeader headerName="Pincode" id="_setHeader12">
+                <simple>${body.getPincode()}</simple>
+            </setHeader>
+            <!-- <to id="_to1" uri="sql:{{SQLInsertQuery}}?dataSource=oracleDataSource"/> -->
+            <process id="ProcessCustomerCreation" ref="ProcessCreateCustomer"/>
+            <convertBodyTo id="_convertBodyTo2" type="org.example.createcustomer_wsdl.CreateCustomerResponse"/>
+        </route>
+    </camelContext>
+</blueprint>

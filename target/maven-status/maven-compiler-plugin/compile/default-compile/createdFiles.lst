@@ -1,0 +1,8 @@
+org\example\createcustomer_wsdl\CreateCustomerServiceImpl.class
+org\example\createcustomer_wsdl\CreateCustomerEndpoint.class
+org\example\createcustomer_wsdl\ObjectFactory.class
+org\example\createcustomer_wsdl\package-info.class
+com\capiot\getFullName\CreateCustomerProcessor.class
+org\example\createcustomer_wsdl\CreateCustomerEndpointService.class
+org\example\createcustomer_wsdl\CreateCustomerResponse.class
+org\example\createcustomer_wsdl\CreateCustomerRequest.class
