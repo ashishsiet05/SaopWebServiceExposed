@@ -158,7 +158,7 @@
 							<goal>wsdl2java</goal>
 						</goals>
 						<configuration>
-							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<sourceRoot>${basedir}/src/main/java</sourceRoot>
 							<wsdlOptions>
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/WSDL/GetFullName.wsdl</wsdl>

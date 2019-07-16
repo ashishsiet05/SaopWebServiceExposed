@@ -1,5 +1,5 @@
 
-package org.example.createcustomer_wsdl;
+package org.example.createcustomer;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

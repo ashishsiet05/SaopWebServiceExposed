@@ -1,8 +1,8 @@
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\package-info.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\CreateCustomerEndpointService.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\ObjectFactory.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\CreateCustomerServiceImpl.java
 C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\com\capiot\getFullName\CreateCustomerProcessor.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\CreateCustomerServiceImpl.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\CreateCustomerEndpoint.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\CreateCustomerRequest.java
-C:\Users\capiot\workspace\SampleWebServiceExpose\target\generated\src\main\java\org\example\createcustomer_wsdl\CreateCustomerResponse.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\CreateCustomerEndpointService.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\package-info.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\ObjectFactory.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\CreateCustomerRequest.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\CreateCustomerEndpoint.java
+C:\Users\capiot\workspace\SampleWebServiceExpose\src\main\java\org\example\createcustomer\CreateCustomerResponse.java
